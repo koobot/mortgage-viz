@@ -71,7 +71,8 @@ Example query:
 money = dash_table.FormatTemplate.money(2)
 percentage = dash_table.FormatTemplate.percentage(2)
 
-app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
+app = Dash(__name__,
+    external_stylesheets=[dbc.themes.BOOTSTRAP])
 
 app.layout = html.Div([
     html.Div(dcc.Markdown(intro_text.format(stamp_duty*100))),
