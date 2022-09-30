@@ -1,7 +1,8 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
 
-from dash import Dash, html, dcc
+from dash import Dash, html, dcc, Input, Output, callback, dash_table
+import dash_bootstrap_components as dbc
 import plotly.express as px
 import numpy as np
 import pandas as pd
@@ -42,26 +43,21 @@ house_price = house_price[[
     'purchase_price',
     'stamp_duty']]
 
-# Generate table
-def generate_table(dataframe, max_rows=10000):
-    return html.Table([
-        html.Thead(
-            html.Tr([html.Th(col) for col in dataframe.columns])
-        ),
-        html.Tbody([
-            html.Tr([
-                html.Td(dataframe.iloc[i][col]) for col in dataframe.columns
-            ]) for i in range(min(len(dataframe), max_rows))
-        ])
-    ])
+# DASH APP
+app = Dash(external_stylesheets=[dbc.themes.BOOTSTRAP])
 
-
-app = Dash(__name__)
-
-app.layout = html.Div([
-    html.H4(children='Deposits'),
-    generate_table(house_price)
+app.layout = dbc.Container([
+    dbc.Label('Click a cell in the table:'),
+    dash_table.DataTable(
+        house_price.to_dict('records'),
+        [{"name": i, "id": i} for i in house_price.columns],
+        id='tbl'),
+    dbc.Alert(id='tbl_out'),
 ])
+
+@callback(Output('tbl_out', 'children'), Input('tbl', 'active_cell'))
+def update_graphs(active_cell):
+    return str(active_cell) if active_cell else "Click the table"
 
 if __name__ == '__main__':
     app.run_server(debug=True)
