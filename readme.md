@@ -1,12 +1,20 @@
 # Mortgage visualisation tool
 
+## Terminology resources
+https://www.commbank.com.au/articles/home-loans/paying-off-your-home-loan.html
+https://www.vic.gov.au/first-home-buyer-guide
+
+Principal amount = the amount owed to bank before interest
+
+Purchase price = the total price of the house
+
 ## Brainstorm
 assumptions
 - no change to salary
 
 salary input
-- koo salary
-- alex salary
+- person 1 salary
+- person 2 salary
 - choose whether weekly/fortnightly/monthly
 
 fees input
